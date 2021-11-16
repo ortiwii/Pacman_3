@@ -1,3 +1,4 @@
+# coding=utf-8
 # perceptron.py
 # -------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -12,10 +13,11 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
+
 # Perceptron implementation
 import util
 import pdb
-
+import numpy as np
 PRINT = True
 
 class PerceptronClassifier:
@@ -52,11 +54,27 @@ class PerceptronClassifier:
         self.features = trainingData[0].keys() # could be useful later
         # DO NOT ZERO OUT YOUR WEIGHTS BEFORE STARTING TRAINING, OR
         # THE AUTOGRADER WILL LIKELY DEDUCT POINTS.
-
         for iteration in range(self.max_iterations):
-            print "Starting iteration ", iteration, "..."
+            #pdb.set_trace()  # esto es un break point para que puedas comprobar el formato de los datos
+            print ("Starting iteration ", iteration, "...")
             for i in range(len(trainingData)):#training data
-                pdb.set_trace()#esto es un break point para que puedas comprobar el formato de los datos
+                max = -10000000
+                for j in range(len(self.weights)):
+                    prod = np.dot(self.weights[j], trainingData[i]) #este sería x0 (en la primera vuelta) (xj)
+                    if (prod > max):
+                        max=prod #en max guardamos la distancia a la instancia que más cerca está de la que estamos recorriendo
+                        indclase=j #guardas el índice de la clase a la que predices que pertenece
+
+                if(indclase != trainingLabels[i]):
+                    # recalcular pesos
+                    self.weights[trainingLabels[i]].__radd__(trainingData[i]) #honek jarraian egiten du kenketa pisu guztientzat
+                    #pdb.set_trace()  # esto es un break point para que puedas comprobar el formato de los datos
+                    self.weights[indclase].__sub__(trainingData[i]) #honek jarraian egiten du gehiketa pisu guztientzat
+
+
+
+
+
                 ########################################################################################
                 # 1. i es el indice de un ejemplo (un item, f(x) de un ejemplo) del conjunto de entrenamiento.
                 # 2. Asi pues, en cada vuelta de este loop se trata un solo ejemplo
@@ -66,7 +84,13 @@ class PerceptronClassifier:
                 #          La dimension del vector w tambien es self.features, es decir, habra tantos pesos en w_rasgo dentro de w como rasgos haya en cada item de ejemplo
                 #          Recordad tambien que es una clasificacion multiclase en este caso. Hay tantas clases como nos marca el atributo self.legalLabels
                 #########################################################################################
-                "*** YOUR CODE HERE ***"
+
+
+
+
+
+
+
 
 
     def classify(self, data ):
