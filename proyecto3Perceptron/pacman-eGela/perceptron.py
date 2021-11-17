@@ -67,9 +67,9 @@ class PerceptronClassifier:
 
                 if(indclase != trainingLabels[i]):
                     # recalcular pesos
-                    self.weights[trainingLabels[i]].__radd__(trainingData[i]) #honek jarraian egiten du kenketa pisu guztientzat
+                    self.weights[trainingLabels[i]].__radd__(trainingData[i]) #honek jarraian egiten du gehiketa pisu guztientzat
                     #pdb.set_trace()  # esto es un break point para que puedas comprobar el formato de los datos
-                    self.weights[indclase].__sub__(trainingData[i]) #honek jarraian egiten du gehiketa pisu guztientzat
+                    self.weights[indclase].__sub__(trainingData[i]) #honek jarraian egiten du kenketa pisu guztientzat
 
 
 

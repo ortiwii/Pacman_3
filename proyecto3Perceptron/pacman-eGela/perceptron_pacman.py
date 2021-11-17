@@ -1,3 +1,4 @@
+# coding=utf-8
 # perceptron_pacman.py
 # --------------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -16,6 +17,9 @@
 import util
 from perceptron import PerceptronClassifier
 from pacman import GameState
+import pdb
+
+
 
 PRINT = True
 
@@ -38,6 +42,7 @@ class PerceptronClassifierPacman(PerceptronClassifier):
             for l in legalMoves:
                 vectors[l] = self.weights * datum[l] #changed from datum to datum[l]
             guesses.append(vectors.argMax())
+
         return guesses
 
 
@@ -45,9 +50,21 @@ class PerceptronClassifierPacman(PerceptronClassifier):
         self.features = trainingData[0][0]['Stop'].keys() # could be useful later
         # DO NOT ZERO OUT YOUR WEIGHTS BEFORE STARTING TRAINING, OR
         # THE AUTOGRADER WILL LIKELY DEDUCT POINTS.
-
         for iteration in range(self.max_iterations):
             print "Starting iteration ", iteration, "..."
+            clasepredicha=0
             for i in range(len(trainingData)):
-                "*** YOUR CODE HERE ***"
-                util.raiseNotDefined()
+                #pdb.set_trace()  # esto es un break point para que puedas comprobar el formato de los datos
+                max = -10000000
+                for j in trainingData[i][1]:
+                    score=trainingData[i][0][j]  * self.weights
+
+                    if(score > max):
+                        max= score
+                        clasepredicha= j
+
+                if (clasepredicha != trainingLabels[i]):
+                    # recalcular pesos
+                    self.weights= self.weights + trainingData[i][0][trainingLabels[i]] #trainingData[i][0] legalmoves bakoitzak duen pisua (hiztegia)
+                    #aurreko for-eko trainingData[i][0][j]-ren berdina
+                    self.weights = self.weights - trainingData[i][0][clasepredicha] #iragarri dugun klasea ez denez egokia, pisuak kendu
