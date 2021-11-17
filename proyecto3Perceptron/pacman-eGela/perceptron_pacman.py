@@ -57,8 +57,7 @@ class PerceptronClassifierPacman(PerceptronClassifier):
                 #pdb.set_trace()  # esto es un break point para que puedas comprobar el formato de los datos
                 max = -10000000
                 for j in trainingData[i][1]:
-                    score=trainingData[i][0][j]  * self.weights
-
+                    score=trainingData[i][0][j]  * self.weights #weights: {'foodcount':x} (x: balioa)
                     if(score > max):
                         max= score
                         clasepredicha= j
